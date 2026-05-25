@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Introsort - Demonstração Acadêmica</title>
+    <meta name="description"
+        content="Visualizador interativo de algoritmo Introsort (QuickSort, HeapSort e InsertionSort) com animações em tempo real e painel didático.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Outfit & Space Mono para visual técnico/acadêmico -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Cabeçalho -->
+        <header class="app-header">
+            <h1 class="app-title">Visualizador de Introsort</h1>
+            <p class="app-subtitle">Demonstração Interativa do Algoritmo Híbrido (QuickSort &rarr; HeapSort &rarr;
+                InsertionSort)</p>
+        </header>
+
+        <!-- Layout de Grade Principal -->
+        <main class="app-grid">
+            <!-- Painel de Controles -->
+            <section class="card controls-card" aria-labelledby="controls-title">
+                <h2 id="controls-title" class="card-title">Configurações e Controles</h2>
+
+                <div class="control-group">
+                    <label for="slider-array-size" class="control-label">
+                        Tamanho do Vetor: <span id="label-array-size-value">60</span>
+                    </label>
+                    <input type="range" id="slider-array-size" min="10" max="150" value="60" class="slider-input">
+                </div>
+
+                <div class="control-group">
+                    <label for="slider-sorting-speed" class="control-label">
+                        Velocidade (ms): <span id="label-sorting-speed-value">50</span>
+                    </label>
+                    <input type="range" id="slider-sorting-speed" min="1" max="1000" value="50" class="slider-input">
+                </div>
+
+                <div class="control-group">
+                    <label for="slider-recursion-limit" class="control-label">
+                        Limite de Recursão: <span id="label-recursion-limit-value">0</span>
+                    </label>
+                    <input type="range" id="slider-recursion-limit" min="1" max="20" value="10" class="slider-input">
+                </div>
+
+                <div class="button-actions">
+                    <button id="button-generate-array" class="btn btn-secondary">Gerar Vetor</button>
+                    <button id="button-start-sorting" class="btn btn-primary">Iniciar</button>
+                    <button id="button-pause-sorting" class="btn btn-warning" disabled>Pausar</button>
+                    <button id="button-reset-sorting" class="btn btn-danger">Resetar</button>
+                </div>
+            </section>
+
+            <!-- Painel de Estatísticas -->
+            <section class="card stats-card" aria-labelledby="stats-title">
+                <h2 id="stats-title" class="card-title">Estatísticas em Tempo Real</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-label">Algoritmo Ativo</span>
+                        <span id="stat-active-algorithm" class="stat-value text-muted">Inativo</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Tempo Decorrido</span>
+                        <span id="stat-elapsed-time" class="stat-value font-mono">0.00s</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Comparações</span>
+                        <span id="stat-comparison-count" class="stat-value font-mono">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Trocas / Escritas</span>
+                        <span id="stat-swap-count" class="stat-value font-mono">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Profundidade Recursão</span>
+                        <span id="stat-recursion-depth" class="stat-value font-mono">0 / 0</span>
+                    </div>
+                </div>
+                <div class="legend-container">
+                    <div class="legend-item"><span class="legend-dot legend-quicksort"></span> QuickSort (Azul)</div>
+                    <div class="legend-item"><span class="legend-dot legend-heapsort"></span> HeapSort (Vermelho)</div>
+                    <div class="legend-item"><span class="legend-dot legend-insertionsort"></span> InsertionSort (Verde)
+                    </div>
+                    <div class="legend-item"><span class="legend-dot legend-comparison"></span> Comparação (Amarelo)
+                    </div>
+                    <div class="legend-item"><span class="legend-dot legend-sorted"></span> Ordenado (Roxo)</div>
+                </div>
+            </section>
+
+            <!-- Visualizador do Vetor (Barras) -->
+            <section class="card visualizer-card" aria-label="Visualização gráfica das barras">
+                <div id="container-bars" class="bars-container"></div>
+            </section>
+
+            <!-- Console Educacional -->
+            <section class="card educational-card" aria-labelledby="edu-title">
+                <h2 id="edu-title" class="card-title">Painel de Explicação Acadêmica</h2>
+                <div id="virtual-console" class="console-box" role="log">
+                    <div class="console-line system-msg">&gt;&gt; Sistema pronto. Configure o vetor e clique em
+                        "Iniciar" para visualizar o Introsort.</div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

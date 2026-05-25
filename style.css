@@ -1,0 +1,390 @@
+/* ==========================================================================
+   VISUALIZADOR DE INTROSORT - ESTILOS GERAIS
+   ========================================================================== */
+
+/* Custom Properties para Design System */
+:root {
+    --bg-primary: #0a0b10;
+    --bg-secondary: #0f111a;
+    --bg-card: rgba(20, 22, 36, 0.6);
+    --border-color: rgba(255, 255, 255, 0.07);
+    --border-hover: rgba(99, 102, 241, 0.3);
+    
+    /* Textos */
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    
+    /* Cores do Introsort (Requisitos de Cores) */
+    --color-quicksort: #3b82f6;       /* Azul */
+    --color-heapsort: #ef4444;        /* Vermelho */
+    --color-insertionsort: #10b981;   /* Verde */
+    --color-comparison: #fbbf24;      /* Amarelo */
+    --color-sorted: #a78bfa;          /* Roxo */
+    --color-default: #4b5563;         /* Cinza (Vetor Desordenado) */
+    
+    /* Ações e Botões */
+    --btn-primary: linear-gradient(135deg, #4f46e5, #6366f1);
+    --btn-primary-hover: linear-gradient(135deg, #4338ca, #4f46e5);
+    --btn-secondary: rgba(255, 255, 255, 0.08);
+    --btn-secondary-hover: rgba(255, 255, 255, 0.15);
+    --btn-danger: linear-gradient(135deg, #dc2626, #ef4444);
+    --btn-warning: linear-gradient(135deg, #d97706, #f59e0b);
+    
+    /* Animações e Efeitos */
+    --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    --transition-fast: all 0.15s ease;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset de Elementos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-primary);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(31, 38, 103, 0.15) 0, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.1) 0, transparent 40%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+}
+
+/* Container de Aplicação */
+.app-container {
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Cabeçalho */
+.app-header {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.app-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    background: linear-gradient(to right, #ffffff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.25rem;
+}
+
+.app-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+/* Layout Grid Principal (Design Responsivo e Premium) */
+.app-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 1.5rem;
+    grid-template-areas: 
+        "controls visualizer"
+        "stats visualizer"
+        "stats education";
+}
+
+@media (max-width: 1024px) {
+    .app-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas: 
+            "controls"
+            "visualizer"
+            "stats"
+            "education";
+    }
+}
+
+/* Cartões Estilizados (Glassmorphism) */
+.card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-premium);
+    transition: border-color 0.4s ease;
+}
+
+.card:hover {
+    border-color: var(--border-hover);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: #ffffff;
+    border-left: 3px solid #6366f1;
+    padding-left: 0.75rem;
+    letter-spacing: 0.025em;
+}
+
+/* Painel de Controles */
+.controls-card {
+    grid-area: controls;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+}
+
+.control-label span {
+    font-family: 'Space Mono', monospace;
+    color: #a78bfa;
+    font-weight: 600;
+}
+
+.slider-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+}
+
+.slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #6366f1;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    transition: var(--transition-fast);
+}
+
+.slider-input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.button-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.btn {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.65rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary { background: var(--btn-primary); }
+.btn-primary:hover:not(:disabled) { background: var(--btn-primary-hover); transform: translateY(-1px); }
+
+.btn-secondary { border: 1px solid var(--border-color); background: var(--btn-secondary); }
+.btn-secondary:hover:not(:disabled) { background: var(--btn-secondary-hover); }
+
+.btn-danger { background: var(--btn-danger); }
+.btn-danger:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+
+.btn-warning { background: var(--btn-warning); }
+.btn-warning:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+
+/* Painel de Estatísticas */
+.stats-card {
+    grid-area: stats;
+    display: flex;
+    flex-direction: column;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.font-mono {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    color: #a78bfa;
+}
+
+/* Legendas */
+.legend-container {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.legend-item {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-quicksort { background-color: var(--color-quicksort); }
+.legend-heapsort { background-color: var(--color-heapsort); }
+.legend-insertionsort { background-color: var(--color-insertionsort); }
+.legend-comparison { background-color: var(--color-comparison); }
+.legend-sorted { background-color: var(--color-sorted); }
+
+/* Visualizador de Barras */
+.visualizer-card {
+    grid-area: visualizer;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    position: relative;
+    padding: 1.5rem;
+}
+
+.bars-container {
+    width: 100%;
+    height: 100%;
+    min-height: 380px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    padding-top: 2rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.array-bar {
+    flex: 1;
+    background-color: var(--color-default);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    transition: height 0.05s ease, background-color 0.15s ease;
+    min-height: 2px;
+    position: relative;
+}
+
+.array-bar.quicksort { background-color: var(--color-quicksort); box-shadow: 0 0 8px rgba(59, 130, 246, 0.4); }
+.array-bar.heapsort { background-color: var(--color-heapsort); box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+.array-bar.insertionsort { background-color: var(--color-insertionsort); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+.array-bar.comparing { background-color: var(--color-comparison); box-shadow: 0 0 10px rgba(251, 191, 36, 0.6); z-index: 2; }
+.array-bar.sorted { background-color: var(--color-sorted); box-shadow: 0 0 8px rgba(167, 139, 250, 0.4); }
+
+/* Painel de Explicação Acadêmica (Console Virtual) */
+.educational-card {
+    grid-area: education;
+    display: flex;
+    flex-direction: column;
+}
+
+.console-box {
+    background: #05060b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
+    height: 160px;
+    overflow-y: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+/* Scrollbar do Console */
+.console-box::-webkit-scrollbar {
+    width: 6px;
+}
+.console-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+.console-box::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+.console-box::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.console-line {
+    padding-left: 0.5rem;
+    border-left: 2px solid transparent;
+}
+
+.console-line.system-msg { border-left-color: var(--text-muted); color: var(--text-secondary); }
+.console-line.quicksort-msg { border-left-color: var(--color-quicksort); color: #93c5fd; }
+.console-line.heapsort-msg { border-left-color: var(--color-heapsort); color: #fca5a5; }
+.console-line.insertionsort-msg { border-left-color: var(--color-insertionsort); color: #6ee7b7; }
+.console-line.transition-msg { border-left-color: var(--color-sorted); color: var(--color-sorted); font-weight: bold; }
