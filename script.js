@@ -131,16 +131,10 @@ function generateNewArray() {
 function updateRecursionLimitSlider() {
     const maxCalculatedLimit = 2 * Math.floor(Math.log2(arrayValues.length));
     sliderRecursionLimit.max = maxCalculatedLimit;
-
-    let currentSliderValue = parseInt(sliderRecursionLimit.value, 10);
-    if (isNaN(currentSliderValue) || currentSliderValue > maxCalculatedLimit || currentSliderValue < 1) {
-        sliderRecursionLimit.value = maxCalculatedLimit;
-        currentSliderValue = maxCalculatedLimit;
-    }
-
     sliderRecursionLimit.min = 1;
-    labelRecursionLimitValue.textContent = sliderRecursionLimit.value;
-    recursionDepthLimit = currentSliderValue;
+    sliderRecursionLimit.value = maxCalculatedLimit;
+    labelRecursionLimitValue.textContent = maxCalculatedLimit;
+    recursionDepthLimit = maxCalculatedLimit;
 }
 
 function renderBars() {
@@ -327,12 +321,6 @@ async function introSortFlow() {
 async function runIntroSortRecursive(leftIndex, rightIndex, recursionDepth) {
     await checkPauseAndAbort();
 
-    // Atualiza estatística de profundidade máxima
-    if (recursionDepth > maxRecursionDepthReached) {
-        maxRecursionDepthReached = recursionDepth;
-        statRecursionDepth.textContent = `${maxRecursionDepthReached} / ${recursionDepthLimit}`;
-    }
-
     const partitionSize = rightIndex - leftIndex + 1;
 
     // Regra 1: Caso o tamanho do subarray seja pequeno (< 16), usa InsertionSort
@@ -353,6 +341,12 @@ async function runIntroSortRecursive(leftIndex, rightIndex, recursionDepth) {
     statActiveAlgorithm.textContent = 'QuickSort';
     statActiveAlgorithm.className = 'stat-value text-primary';
     logEducationalMessage(`QuickSort ativo na partição [${leftIndex} a ${rightIndex}] com profundidade de recursão ${recursionDepth}.`, 'quicksort-msg');
+
+    // Atualiza estatística de profundidade máxima real do QuickSort
+    if (recursionDepth > maxRecursionDepthReached) {
+        maxRecursionDepthReached = recursionDepth;
+        statRecursionDepth.textContent = `${maxRecursionDepthReached} / ${recursionDepthLimit}`;
+    }
 
     // Define elementos da partição como ativos em QuickSort
     for (let elementIndex = leftIndex; elementIndex <= rightIndex; elementIndex++) {
