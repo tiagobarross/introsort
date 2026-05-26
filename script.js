@@ -26,10 +26,11 @@ const virtualConsole = document.getElementById('virtual-console');
 
 // Estado Global da Aplicação
 let arrayValues = [];
+let barElements = []; // Armazena referências para reutilização do DOM das barras
 let isPlaying = false;
 let isPaused = false;
 let shouldAbort = false;
-let speedMs = parseInt(sliderSortingSpeed.value, 10);
+let speedMs = 1001 - parseInt(sliderSortingSpeed.value, 10); // Velocidade invertida (esquerda = lento, direita = rápido)
 let totalElements = parseInt(sliderArraySize.value, 10);
 
 let comparisonCount = 0;
@@ -44,6 +45,7 @@ let resolvePausePromise = null;
 
 // Inicialização de Eventos
 window.addEventListener('DOMContentLoaded', () => {
+    labelSortingSpeedValue.textContent = speedMs; // Inicializa a exibição da velocidade na UI
     generateNewArray();
     setupEventListeners();
 });
@@ -82,7 +84,8 @@ function setupEventListeners() {
     });
 
     sliderSortingSpeed.addEventListener('input', (event) => {
-        speedMs = parseInt(event.target.value, 10);
+        const sliderValue = parseInt(event.target.value, 10);
+        speedMs = 1001 - sliderValue;
         labelSortingSpeedValue.textContent = speedMs;
     });
 
@@ -98,6 +101,12 @@ function logEducationalMessage(messageText, typeClass = 'system-msg') {
     consoleLine.className = `console-line ${typeClass}`;
     consoleLine.innerHTML = `&gt;&gt; ${messageText}`;
     virtualConsole.appendChild(consoleLine);
+
+    // Limita a quantidade de linhas no console para evitar lentidão no DOM
+    while (virtualConsole.children.length > 100) {
+        virtualConsole.removeChild(virtualConsole.firstChild);
+    }
+
     virtualConsole.scrollTop = virtualConsole.scrollHeight;
 }
 
@@ -130,28 +139,67 @@ function generateNewArray() {
 // Atualiza as configurações e o valor exibido do slider de limite de profundidade de recursão
 function updateRecursionLimitSlider() {
     const maxCalculatedLimit = 2 * Math.floor(Math.log2(arrayValues.length));
+    
+    // Armazena a escolha de profundidade prévia do usuário
+    const previousSelectedLimit = parseInt(sliderRecursionLimit.value, 10);
+    
     sliderRecursionLimit.max = maxCalculatedLimit;
     sliderRecursionLimit.min = 1;
-    sliderRecursionLimit.value = maxCalculatedLimit;
-    labelRecursionLimitValue.textContent = maxCalculatedLimit;
-    recursionDepthLimit = maxCalculatedLimit;
+    
+    // Mantém a opção do usuário se estiver dentro do novo limite máximo, caso contrário ajusta
+    let newLimitValue = isNaN(previousSelectedLimit) ? maxCalculatedLimit : previousSelectedLimit;
+    if (newLimitValue > maxCalculatedLimit) {
+        newLimitValue = maxCalculatedLimit;
+    } else if (newLimitValue < 1) {
+        newLimitValue = 1;
+    }
+    
+    sliderRecursionLimit.value = newLimitValue;
+    labelRecursionLimitValue.textContent = newLimitValue;
+    recursionDepthLimit = newLimitValue;
 }
 
 function renderBars() {
-    containerBars.innerHTML = '';
+    const totalBars = arrayValues.length;
 
-    for (let barIndex = 0; barIndex < arrayValues.length; barIndex++) {
-        const barElement = document.createElement('div');
-        barElement.className = 'array-bar';
-        barElement.style.height = `${arrayValues[barIndex].value}%`;
+    // Se o número de elementos mudou ou as referências não existem, reconstrói o DOM do container
+    if (containerBars.children.length !== totalBars || barElements.length !== totalBars) {
+        containerBars.innerHTML = '';
+        barElements = [];
+        const fragment = document.createDocumentFragment();
 
-        // Aplica classe de cor com base no estado do elemento
-        const elementState = arrayValues[barIndex].state;
-        if (elementState !== 'default') {
-            barElement.classList.add(elementState);
+        for (let barIndex = 0; barIndex < totalBars; barIndex++) {
+            const barElement = document.createElement('div');
+            barElement.className = 'array-bar';
+            barElement.style.height = `${arrayValues[barIndex].value}%`;
+
+            const elementState = arrayValues[barIndex].state;
+            if (elementState !== 'default') {
+                barElement.classList.add(elementState);
+            }
+
+            fragment.appendChild(barElement);
+            barElements.push(barElement);
         }
+        containerBars.appendChild(fragment);
+    } else {
+        // Atualiza apenas as propriedades modificadas das barras existentes
+        for (let barIndex = 0; barIndex < totalBars; barIndex++) {
+            const barElement = barElements[barIndex];
+            const currentValue = arrayValues[barIndex].value;
+            const currentState = arrayValues[barIndex].state;
 
-        containerBars.appendChild(barElement);
+            // Evita reflows e atualizações desnecessárias no DOM comparando os valores existentes
+            const expectedHeight = `${currentValue}%`;
+            if (barElement.style.height !== expectedHeight) {
+                barElement.style.height = expectedHeight;
+            }
+
+            const expectedClassName = currentState === 'default' ? 'array-bar' : `array-bar ${currentState}`;
+            if (barElement.className !== expectedClassName) {
+                barElement.className = expectedClassName;
+            }
+        }
     }
 }
 

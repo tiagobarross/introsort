@@ -75,7 +75,7 @@ body {
 }
 
 .app-title {
-    font-size: 2.25rem;
+    font-size: 3rem;
     font-weight: 700;
     letter-spacing: -0.025em;
     background: linear-gradient(to right, #ffffff, #a78bfa);
@@ -85,7 +85,7 @@ body {
 }
 
 .app-subtitle {
-    font-size: 1rem;
+    font-size: 1.25rem;
     color: var(--text-secondary);
     font-weight: 300;
 }
@@ -93,7 +93,7 @@ body {
 /* Layout Grid Principal (Design Responsivo e Premium) */
 .app-grid {
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: 400px 1fr;
     grid-template-rows: auto 1fr auto;
     gap: 1.5rem;
     grid-template-areas: 
@@ -131,7 +131,7 @@ body {
 }
 
 .card-title {
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     font-weight: 600;
     margin-bottom: 1.25rem;
     color: #ffffff;
@@ -155,7 +155,7 @@ body {
 }
 
 .control-label {
-    font-size: 0.875rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
     display: flex;
     justify-content: space-between;
@@ -165,6 +165,7 @@ body {
     font-family: 'Space Mono', monospace;
     color: #a78bfa;
     font-weight: 600;
+    font-size: 1.2rem;
 }
 
 .slider-input {
@@ -180,8 +181,8 @@ body {
 .slider-input::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: #6366f1;
     cursor: pointer;
@@ -203,8 +204,8 @@ body {
 .btn {
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
-    font-size: 0.875rem;
-    padding: 0.65rem 1rem;
+    font-size: 1.05rem;
+    padding: 0.75rem 1.25rem;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -256,19 +257,19 @@ body {
 }
 
 .stat-label {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--text-secondary);
 }
 
 .stat-value {
-    font-size: 0.95rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: #ffffff;
 }
 
 .font-mono {
     font-family: 'Space Mono', monospace;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     color: #a78bfa;
 }
 
@@ -283,7 +284,7 @@ body {
 }
 
 .legend-item {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
@@ -291,8 +292,8 @@ body {
 }
 
 .legend-dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     display: inline-block;
 }
@@ -329,7 +330,7 @@ body {
     background-color: var(--color-default);
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    transition: height 0.05s ease, background-color 0.15s ease;
+    transition: background-color 0.1s ease;
     min-height: 2px;
     position: relative;
 }
@@ -352,10 +353,10 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 1rem;
-    height: 160px;
+    height: 200px;
     overflow-y: auto;
     font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
+    font-size: 1.05rem;
     line-height: 1.5;
     color: #e5e7eb;
     display: flex;
